@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+}
+
+.toaster {
+  position: fixed;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  padding: 1rem;
+  border-radius: 2px;
+  z-index: 999;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  transition:
+    top 0.3s ease,
+    bottom 0.3s ease;
+}
+
+.toaster.toaster-warning {
+  background: yellow;
+  color: #fff;
+}
+
+.toaster.toaster-info {
+  background: blue;
+  color: #fff;
+}
+.toaster.toaster-sucess {
+  background: green;
+  color: #fff;
+}
+.toaster.toaster-error {
+  background: red;
+  color: #fff;
+}
+
+.toaster.toaster-top-right {
+  top: 10px;
+  right: 10px;
+}
+.toaster.toaster-top-left {
+  top: 10px;
+  left: 10px;
+}
+.toaster.toaster-bottom-right {
+  bottom: 10px;
+  right: 10px;
+}
+.toaster.toaster-bottom-left {
+  bottom: 10px;
+  left: 10px;
+}
