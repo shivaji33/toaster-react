@@ -7,7 +7,6 @@ function App() {
     <>
       <ToasterProvider>
         <Home />
-        <p>Home component!</p>
       </ToasterProvider>
     </>
   );

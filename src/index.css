@@ -2,51 +2,72 @@
   box-sizing: border-box;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .toaster {
-  position: fixed;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-  padding: 1rem;
+  margin: 0.5rem;
   border-radius: 2px;
-  z-index: 999;
-  background: #fff;
+  position: relative;
+  max-width: 320px;
+  color: #fff;
   display: flex;
   align-items: center;
+  flex-direction: column;
   transition:
     top 0.3s ease,
     bottom 0.3s ease;
 }
 
-.toaster.toaster-warning {
-  background: yellow;
-  color: #fff;
+.progress-bar-wrapper {
+  width: 100%;
+  height: 5px;
+}
+.progress-bar-wrapper .progress-bar {
+  background: #fff;
+  width: 0%;
+  transition: width 0.2s ease;
+  height: 100%;
 }
 
-.toaster.toaster-info {
-  background: blue;
-  color: #fff;
+.toaster-container {
+  position: fixed;
+  z-index: 999;
 }
-.toaster.toaster-sucess {
-  background: green;
-  color: #fff;
-}
-.toaster.toaster-error {
-  background: red;
-  color: #fff;
+.toaster-top-right-container {
+  top: 0;
+  right: 0;
 }
 
-.toaster.toaster-top-right {
-  top: 10px;
-  right: 10px;
+.toaster-top-left-container {
+  top: 0;
+  left: 0;
 }
-.toaster.toaster-top-left {
-  top: 10px;
-  left: 10px;
+
+.toaster-bottom-right-container {
+  bottom: 0;
+  right: 0;
 }
-.toaster.toaster-bottom-right {
-  bottom: 10px;
-  right: 10px;
+
+.toaster-bottom-left-container {
+  bottom: 0;
+  left: 0;
 }
-.toaster.toaster-bottom-left {
-  bottom: 10px;
-  left: 10px;
+
+label {
+  display: block;
+  padding: 1rem;
+  padding-left: 0;
+}
+
+.home-input-wrapper {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 18px;
+  margin: auto;
 }

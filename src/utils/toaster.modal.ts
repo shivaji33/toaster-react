@@ -1,12 +1,13 @@
-import { ToasterPositionType } from "./toaster.enum";
+import { ToasterPositionType,ToasterShowType } from "./toaster.enum";
 
 export interface ToasterInterface {
   position: ToasterPositionType;
   autoClose: number;
   message: string;
-  type: "sucess" | "warning" | "info" | "error";
+  type: ToasterShowType;
 }
 
 export interface QueueToastInterface extends ToasterInterface {
   toastId: string;
 }
+

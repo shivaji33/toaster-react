@@ -1,54 +1,80 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { QueueToastInterface } from "../utils/toaster.modal";
 import { createPortal } from "react-dom";
 import { AiOutlineInfoCircle, AiOutlineClose } from "react-icons/ai";
+import ProgressBar from "./ProgressBar";
+import { ToasterColor } from "../utils/toaster.enum";
 
 const Toast: React.FC<{
   toast: QueueToastInterface;
   removeToast: (id: string) => void;
   index: number;
 }> = ({ toast, removeToast, index }) => {
+  const [progressbarWidth, setProgressbarWidth] = useState<number>(
+    toast.autoClose,
+  );
+
   useEffect(() => {
+    let timer, intervel;
     if (toast) {
-        const timer = setTimeout(() => {
-            removeToast(toast.toastId);
-          }, toast.autoClose);
+      timer = setTimeout(() => {
+        removeToast(toast.toastId);
+      }, toast.autoClose);
+
+      intervel = setInterval(() => {
+        setProgressbarWidth((prev: number) => (prev > 0 ? prev - 100 : 0));
+      }, 100);
     }
     return () => {
       clearTimeout(timer);
+      clearInterval(intervel);
     };
-  }, [toast.toastId, toast.autoClose, removeToast]);
+  }, [toast.toastId, toast.autoClose]);
 
-  const getPositionStyle = () => {
-    const offset = index * 60 + 10;
-    switch (toast.position) {
-      case "top-right":
-        return { top: `${offset}px` };
-      case "top-left":
-        return { top: `${offset}px` };
-      case "bottom-right":
-        return { bottom: `${offset}px` };
-      case "bottom-left":
-        return { bottom: `${offset}px` };
-      default:
-        return {};
-    }
+  const itemsCenter = {
+    display: "flex",
+    alignItems: "center",
+  };
+  const toasterContainer = {
+    position: "absolute",
+    top: "3px",
+    right: "7px",
+    cursor: "pointer",
   };
 
-  return createPortal(
-    <div
-      className={`toaster toaster-${toast.position} toaster-${toast.type}`}
-      style={getPositionStyle()}
-    >
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <AiOutlineInfoCircle />
-        <span style={{ paddingLeft: ".25rem", paddingRight: ".25rem" }}>
-          {toast.message}
-        </span>
+  const toasterInner = {
+    ...itemsCenter,
+    padding: "1rem",
+    paddingBottom: "0",
+  };
+
+  return (
+    <div className={`toaster`} style={{ background: ToasterColor[toast.type] }}>
+      <div style={toasterContainer}>
+        <AiOutlineClose size={12} onClick={() => removeToast(toast.toastId)} />
       </div>
-      <AiOutlineClose onClick={() => removeToast(toast.toastId)} />
-    </div>,
-    document.getElementById("toaster-portal")!,
+      <div style={toasterInner}>
+        <div style={itemsCenter}>
+          <AiOutlineInfoCircle
+            style={{
+              minWidth: "24px",
+            }}
+            size={24}
+          />
+          <span style={{ paddingLeft: ".25rem", paddingRight: ".25rem" }}>
+            {toast.message}
+          </span>
+        </div>
+      </div>
+      <div
+        style={{
+          paddingTop: ".5rem",
+          width: "100%",
+        }}
+      >
+        <ProgressBar width={(progressbarWidth / toast.autoClose) * 100} />
+      </div>
+    </div>
   );
 };
 
